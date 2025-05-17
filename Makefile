@@ -13,8 +13,11 @@ docker-setup:
 # Virtual Environment
 venv:
 	python -m venv speed-venv
-	. speed-venv/bin/activate && pip install --upgrade pip
+ifeq ($(OS),Windows_NT)
+	.\speed-venv\Scripts\activate && pip install -r requirements.txt
+else
 	. speed-venv/bin/activate && pip install -r requirements.txt
+endif
 
 # Update dependencies
 update-deps:
@@ -81,7 +84,11 @@ clean:
 
 # App commands
 run: venv
+ifeq ($(OS),Windows_NT)
+	set PYTHONPATH=$(PWD) && .\speed-venv\Scripts\activate && python -m app.main
+else
 	PYTHONPATH=$(PWD) . speed-venv/bin/activate && python -m app.main
+endif
 
 # Database commands
 db-create:
