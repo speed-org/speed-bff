@@ -19,4 +19,8 @@ COPY . .
 # Expose the port the app runs on
 EXPOSE 5000
 
-CMD ["python", "main.py"]
+# Set Python path to include the app directory
+ENV PYTHONPATH=/app
+
+# Run the application using the module syntax
+CMD ["python", "-m", "app.main"]
