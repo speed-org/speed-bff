@@ -11,3 +11,6 @@ class DragonflyMatchingStatus(Enum):
     WAITING = 'waiting'
     PENDING = 'pending'
     ACTIVE = 'active'
+
+UTF_8 = "utf-8"
+DRAGONFLY_STATUS_FIELD = "status"

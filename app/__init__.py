@@ -19,9 +19,8 @@ def create_app(config: Config):
     app = Flask(__name__)
     app.config.from_object(config)
 
-    # Configure CORS
-    allowed_origins = [origin.strip() for origin in Config.ALLOWED_ORIGINS.split(",")]
-    CORS(app, resources={r"/*": {"origins": allowed_origins}})
+    # TODO: Configure CORS - allow all origins in development
+    CORS(app, resources={r"/*": {"origins": "*"}})
 
     db.init_app(app)
     redis_client.init_app(app)
