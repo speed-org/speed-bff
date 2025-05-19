@@ -4,11 +4,12 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
 from app.config import Config
+from flask_redis import FlaskRedis
 
 db = SQLAlchemy()
 migrate = Migrate()
 log = logging.getLogger(__name__)
-
+redis_client = FlaskRedis()
 
 def create_app(config: Config):
     """
@@ -23,5 +24,6 @@ def create_app(config: Config):
     CORS(app, resources={r"/*": {"origins": allowed_origins}})
 
     db.init_app(app)
+    redis_client.init_app(app)
 
     return app
