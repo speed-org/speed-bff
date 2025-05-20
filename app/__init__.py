@@ -4,10 +4,13 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
 from app.config import Config
+from flask_socketio import SocketIO
+
 
 db = SQLAlchemy()
 migrate = Migrate()
-log = logging.getLogger(__name__)
+socketio = SocketIO()
+logger = logging.getLogger(__name__)
 
 
 def create_app(config: Config):
@@ -18,10 +21,15 @@ def create_app(config: Config):
     app = Flask(__name__)
     app.config.from_object(config)
 
-    # Configure CORS
-    allowed_origins = [origin.strip() for origin in Config.ALLOWED_ORIGINS.split(",")]
-    CORS(app, resources={r"/*": {"origins": allowed_origins}})
+    # Configure CORS using the allowed origins from config
+    CORS(app, resources={r"/*": {"origins": config.ALLOWED_ORIGINS}})
 
     db.init_app(app)
+    socketio.init_app(
+        app,
+        cors_allowed_origins=config.ALLOWED_ORIGINS,
+        async_mode='eventlet',
+        logger=True,
+    )
 
     return app
