@@ -3,6 +3,19 @@
 # Default command
 .DEFAULT_GOAL := run
 
+# Helpers
+# This allows passing arguments directly to commands
+%:
+	@:
+
+# Validation function
+define validate_args
+	@if [ "$(words $(filter-out $@,$(MAKECMDGOALS)))" -eq 0 ]; then \
+		echo "Error: Missing path argument. Usage: make $(1) path"; \
+		exit 1; \
+	fi
+endef
+
 # First time setup
 init: venv docker-setup db-create
 
@@ -109,6 +122,20 @@ db-reset:
 	$(MAKE) db-create
 	$(MAKE) db-migrate
 
+# Lint, Format and Type checking commands
+lint:
+	$(call validate_args,lint)
+	flake8 $(filter-out $@,$(MAKECMDGOALS))
+
+fmt:
+	$(call validate_args,fmt)
+	black $(filter-out $@,$(MAKECMDGOALS))
+
+check:
+	$(call validate_args,check)
+	mypy $(filter-out $@,$(MAKECMDGOALS))
+
+
 # Help command
 help:
 	@echo "Available commands:"
@@ -129,3 +156,6 @@ help:
 	@echo "  make db-migrate  - Run database migrations"
 	@echo "  make db-rollback - Rollback last migration"
 	@echo "  make db-reset    - Reset database (drop, create, migrate)" 
+	@echo "  make lint path   - Validates linting for a given path"
+	@echo "  make fmt path    - formats the code to match linting rules"
+	@echo "  make check path  - Checks typing for a given path"
