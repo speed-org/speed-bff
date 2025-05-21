@@ -4,4 +4,5 @@ from dataclasses import dataclass
 class DragonflyPlayer:
     id: str
     status: str
+    wait_time: int
     
