@@ -1,0 +1,32 @@
+{
+    "info": {
+        "name": "Speed Collection",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Matching System",
+            "item": [
+                {
+                    "name": "Add player to waiting room",
+                    "request": {
+                        "method": "POST",
+                        "url": "{{base_url}}/matching/waiting",
+                        "header": {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"player_id\": \"123456\"\n}"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Speed",
+            "item": []
+        }
+    ]
+}

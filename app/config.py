@@ -9,3 +9,4 @@ class Config:
     API_VERSION = getenv("API_VERSION", "v1")
     SQLALCHEMY_DATABASE_URI = getenv("SQLALCHEMY_DATABASE_URI", "")
     SECRET_KEY = getenv("SECRET_KEY", "")
+    REDIS_URL = getenv("REDIS_URL", "")
