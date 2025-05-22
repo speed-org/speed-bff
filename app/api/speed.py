@@ -1,11 +1,11 @@
-from flask_restx import Namespace, Resource, fields
-from flask import request
+from flask_restx import Namespace, Resource
 
-speed_ns = Namespace('speed', description='Speed API operations')
+speed_ns = Namespace("speed", description="Speed API operations")
 
-@speed_ns.route('/')
+
+@speed_ns.route("/")
 class NewGame(Resource):
-    def post(self):
+    def post(self) -> tuple:
         """
         Create a new game.
         """

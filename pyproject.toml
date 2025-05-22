@@ -1,0 +1,54 @@
+[project]
+authors = [
+  {name = "Andy Vargas", email = "hi.seresx@gmail.com"},
+  {name = "Marissa Singh", email = "marissasinghh@gmail.com"}
+]
+maintainers = [
+  {name = "Andy Vargas", email = "hi.seresx@gmail.com"},
+  {name = "Marissa Singh", email = "marissasinghh@gmail.com"}
+]
+
+name = "speed-bff"
+version = "2025.0.0"
+description = "Speed BFF to handle logic of the game, including authentication, game state management and realtime comunication."
+
+requires-python = ">= 3.10"
+readme = "README.md"
+
+
+[tool.black]
+line-length = 88
+target-version = ['py310']
+include = '\.pyi?$'
+
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_optional = true
+disable_error_code = ["import-untyped"]
+
+plugins = ["sqlalchemy.ext.mypy.plugin"]
+
+[tool.mypy-sqlalchemy]
+treat_optional_as_required = true
+
+[tool.mypy-overrides]
+"flask_restx.*" = {ignore_errors = true}
+"flask.*" = {ignore_missing_imports = true}
+"sqlalchemy.*" = {ignore_missing_imports = true}
+"flask_sqlalchemy.*" = {ignore_missing_imports = true}
+
+exclude = [
+    '^__pycache__\.'
+]

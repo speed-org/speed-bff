@@ -6,7 +6,8 @@ from uuid import UUID
 from datetime import datetime, timezone
 from sqlalchemy.types import DATETIME
 
-class GameRoom(db.Model):
+
+class GameRoom(db.Model):  # type: ignore
     __table_name__ = TableName.GAME_STATE
 
     id: Mapped[UUID] = mapped_column(primary_key=True)
@@ -22,9 +23,12 @@ class GameRoom(db.Model):
     leftHelper: Mapped[list[dict]] = mapped_column(JSON)
     rightHelper: Mapped[list[dict]] = mapped_column(JSON)
 
-    player1Id: Mapped[UUID] = mapped_column(ForeignKey(f'{TableName.PLAYER}.id'))
-    player2Id: Mapped[UUID] = mapped_column(ForeignKey(f'{TableName.PLAYER}.id'))
+    player1Id: Mapped[UUID] = mapped_column(ForeignKey(f"{TableName.PLAYER}.id"))
+    player2Id: Mapped[UUID] = mapped_column(ForeignKey(f"{TableName.PLAYER}.id"))
 
-    created_at: Mapped[datetime] = mapped_column(DATETIME(timezone=True), default= lambda: datetime.now(timezone.utc))
-    updated_at: Mapped[datetime] = mapped_column(DATETIME(timezone=True), default= lambda: datetime.now(timezone.utc))
-    
+    created_at: Mapped[datetime] = mapped_column(
+        DATETIME(timezone=True), default=lambda: datetime.now(timezone.utc)
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DATETIME(timezone=True), default=lambda: datetime.now(timezone.utc)
+    )
