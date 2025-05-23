@@ -3,6 +3,7 @@ from flask import request
 from app.controllers.matching import add_player_to_waitroom, match_oldest_players
 import logging
 
+
 matching_ns = Namespace("matching", description="Matching related operations")
 logger = logging.getLogger(__name__)
 
@@ -13,8 +14,8 @@ class Waiting(Resource):
         """
         Adding user to waiting room.
         """
-        logger.debug("Got to the endpoint")
-        data = request.get_json()
+        logger.debug("Got to the waiting endpoint")
+        data = request.get_json()  # Call to input user ID
 
         player_id = data["player_id"]
         logger.debug(f"Player id: {player_id}")
@@ -30,7 +31,6 @@ class Matching(Resource):
         Matching two oldest users.
         """
         logger.debug("Got to the matching endpoint")
-
         response = match_oldest_players()
 
         return response

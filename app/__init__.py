@@ -31,9 +31,6 @@ def create_app(config: Config) -> Flask:
     DragonflyService.init_player_index(r)
 
     db.init_app(app)
-    socketio.init_app(
-        app,
-        cors_allowed_origins=config.ALLOWED_ORIGINS
-    )
+    socketio.init_app(app, cors_allowed_origins=config.ALLOWED_ORIGINS)
 
     return app

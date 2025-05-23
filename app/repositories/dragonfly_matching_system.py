@@ -8,7 +8,7 @@ from typing import Union
 from app.utils.dragonfly_helpers import (
     decode_bytes,
     create_player_key,
-    get_player_id_from_key,
+    get_id_from_key,
 )
 from redis.commands.search.query import Query
 
@@ -51,9 +51,7 @@ class DragonflyMatchSystemRepository:
         )
 
         oldest_player_ids = [
-            get_player_id_from_key(doc.id)
-            for doc in oldest_players.docs
-            if doc.id is not None
+            get_id_from_key(doc.id) for doc in oldest_players.docs if doc.id is not None
         ]
 
         return oldest_player_ids
