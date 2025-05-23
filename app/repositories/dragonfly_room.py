@@ -12,7 +12,7 @@ class DragonflyRoomRepository:
     @staticmethod
     def generate_room(room_dto: DragonflyRoomDTO) -> Optional[dict[str, str]]:
         """
-        Generates websocket room and joins two matched players.
+        Generates websocket room key and uploads waitroom info to database.
         """
         room_key = generate_room_key(room_dto.id)
 
@@ -23,7 +23,6 @@ class DragonflyRoomRepository:
                 DragonflyRoomField.PLAYER1_ID.value: room_dto.player1_id,
                 DragonflyRoomField.PLAYER2_ID.value: room_dto.player2_id,
                 DragonflyRoomField.GAME_STATE.value: room_dto.gamestate,
-                DragonflyRoomField.IS_ACTIVE.value: room_dto.is_active,
             },
         )
 

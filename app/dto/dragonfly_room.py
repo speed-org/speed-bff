@@ -9,4 +9,3 @@ class DragonflyRoomDTO:
     player1_id: str
     player2_id: str
     gamestate: Optional[GameStateDTO]
-    is_active: bool

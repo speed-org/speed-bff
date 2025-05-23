@@ -1,5 +1,6 @@
 from app.utils.constants import UTF_8, DragonflyNamespace
 from typing import Any
+import uuid
 
 
 def decode_bytes(bytes: Any) -> Any:
@@ -16,3 +17,11 @@ def get_id_from_key(key: str) -> str:
 
 def generate_room_key(id: str) -> str:
     return f"{DragonflyNamespace.ROOM.value}{id}"
+
+
+def generate_waitroom_key(id: str) -> str:
+    return f"{DragonflyNamespace.WAITROOM.value}{id}"
+
+
+def generate_random_id() -> str:
+    return str(uuid.uuid4())

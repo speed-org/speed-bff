@@ -1,6 +1,6 @@
 from flask_restx import Namespace, Resource
 from flask import request
-from app.controllers.matching import add_player_to_waitroom, match_oldest_players
+from app.controllers.matching import add_player_to_matching_system, match_oldest_players
 import logging
 
 
@@ -19,7 +19,7 @@ class Waiting(Resource):
 
         player_id = data["player_id"]
         logger.debug(f"Player id: {player_id}")
-        response = add_player_to_waitroom(player_id)
+        response = add_player_to_matching_system(player_id)
 
         return response
 

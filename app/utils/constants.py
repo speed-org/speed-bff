@@ -9,12 +9,14 @@ class TableName(Enum):
 class DragonflyNamespace(Enum):
     PLAYER = "player:"
     ROOM = "room:"
+    WAITROOM = "waitroom:"
 
 
 class DragonflyMatchingStatus(Enum):
+    CONNECTED = "connecting"
     WAITING = "waiting"
     PENDING = "pending"
-    ACTIVE = "active"
+    PLAYING = "playing"
 
 
 class DragonflyMatchingField(Enum):
@@ -32,6 +34,13 @@ class DragonflyRoomField(Enum):
     PLAYER2_ID = "player2_id"
     GAME_STATE = "game_state"
     IS_ACTIVE = "is_active"
+
+
+class DragonflyWaitroomField(Enum):
+    PLAYER1_ID = "player1_id"
+    PLAYER2_ID = "player2_id"
+    PLAYER1_ACCEPTED = "player1_accepted"
+    PLAYER2_ACCEPTED = "player2_accepted"
 
 
 UTF_8 = "utf-8"
