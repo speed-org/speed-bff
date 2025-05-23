@@ -2,7 +2,8 @@ from dataclasses import dataclass
 
 
 @dataclass
-class DragonflyPlayer:
+class DragonflyPlayerDTO:
     id: str
+    sid: str
     status: str
     wait_time: int
