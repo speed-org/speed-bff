@@ -6,23 +6,21 @@ from flask_cors import CORS
 from app.config import Config
 from app.services.dragonfly import DragonflyService
 import redis
-
-
 from flask_socketio import SocketIO
+from app.event_handlers import register_handlers
 
 
 db = SQLAlchemy()
 migrate = Migrate()
 socketio = SocketIO()
 logger = logging.getLogger(__name__)
-r = redis.from_url(Config.REDIS_URL)
+r = redis.from_url(Config.REDIS_URL, decode_responses=True)
 
 
 def create_app(config: Config) -> Flask:
     """
     Create and configure the Flask application.
     """
-
     app = Flask(__name__)
     app.config.from_object(config)
 
@@ -31,9 +29,7 @@ def create_app(config: Config) -> Flask:
     DragonflyService.init_player_index(r)
 
     db.init_app(app)
-    socketio.init_app(
-        app,
-        cors_allowed_origins=config.ALLOWED_ORIGINS
-    )
+    socketio.init_app(app, cors_allowed_origins=config.ALLOWED_ORIGINS)
+    register_handlers(socketio)
 
     return app

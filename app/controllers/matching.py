@@ -1,6 +1,6 @@
 from app.repositories.dragonfly_matching_system import DragonflyMatchSystemRepository
-from app.utils.constants import DragonflyMatchingStatus
-from app.dto.dragonfly_player import DragonflyPlayer
+from app.utils.constants import DragonflyPlayerStatus
+from app.dto.dragonfly_player import DragonflyPlayerDTO
 import time
 
 
@@ -8,8 +8,11 @@ def add_player_to_waitroom(player_id: str) -> tuple[dict, int]:
     """
     Add a player to the waiting room.
     """
-    player = DragonflyPlayer(
-        player_id, DragonflyMatchingStatus.WAITING.value, int(time.time())
+    player = DragonflyPlayerDTO(
+        id=player_id,
+        sid="",
+        status=DragonflyPlayerStatus.WAITING.value,
+        wait_time=int(time.time()),
     )
     current_info = DragonflyMatchSystemRepository.add_user_to_waitroom(player)
 
