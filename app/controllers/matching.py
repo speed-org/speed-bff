@@ -1,3 +1,4 @@
+from dataclasses import asdict
 from app.repositories.dragonfly_waitroom import DragonflyWaitroomRepository
 from app.repositories.dragonfly_player import DragonflyPlayerRepository
 from app.dto.dragonfly_waitroom import DragonflyWaitroomDTO
@@ -48,6 +49,9 @@ def match_oldest_players() -> tuple[dict, int]:
     # Adding waitroom to dragonfly database
     waitroom_data = DragonflyWaitroomRepository.generate_waitingroom(waitroom_dto)
 
+    if not waitroom_data:
+        return {"message": "Impossible to save waiting room to the database."}, 400
+
     # Updating players status to 'pending'
     players_status = (
         DragonflyWaitroomRepository.change_matched_players_status_to_pending(
@@ -56,9 +60,9 @@ def match_oldest_players() -> tuple[dict, int]:
     )
 
     return {
-        "message": f"Sucessfully matched players:{player_ids}.",
+        "message": f"Sucessfully matched players.",
         "matched_ids": player_ids,
-        "waitroom_data": waitroom_data,
+        "waitroom_data": asdict(waitroom_dto),
         "new status": players_status,
     }, 200
 
