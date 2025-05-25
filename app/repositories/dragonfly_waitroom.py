@@ -32,8 +32,8 @@ class DragonflyWaitroomRepository:
             mapping={
                 DragonflyWaitroomField.PLAYER1_ID.value: waitroom_dto.player1_id,
                 DragonflyWaitroomField.PLAYER2_ID.value: waitroom_dto.player2_id,
-                DragonflyWaitroomField.PLAYER1_ACCEPTED.value: waitroom_dto.player1_accepted,
-                DragonflyWaitroomField.PLAYER1_ACCEPTED.value: waitroom_dto.player2_accepted,
+                DragonflyWaitroomField.PLAYER1_ACCEPTED.value: str(waitroom_dto.player1_accepted),
+                DragonflyWaitroomField.PLAYER2_ACCEPTED.value: str(waitroom_dto.player2_accepted),
             },
         )
 
