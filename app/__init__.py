@@ -7,7 +7,6 @@ from app.config import Config
 from app.services.dragonfly import DragonflyService
 import redis
 from flask_socketio import SocketIO
-from app.event_handlers import register_handlers
 
 
 db = SQLAlchemy()
@@ -21,6 +20,8 @@ def create_app(config: Config) -> Flask:
     """
     Create and configure the Flask application.
     """
+    from app.event_handlers import register_handlers
+    
     app = Flask(__name__)
     app.config.from_object(config)
 
