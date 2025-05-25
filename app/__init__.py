@@ -21,7 +21,7 @@ def create_app(config: Config) -> Flask:
     Create and configure the Flask application.
     """
     from app.event_handlers import register_handlers
-    
+
     app = Flask(__name__)
     app.config.from_object(config)
 
