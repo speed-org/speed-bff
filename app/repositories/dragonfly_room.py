@@ -1,11 +1,10 @@
 from app.utils.dragonfly_helpers import (
-    decode_bytes,
     generate_room_key,
 )
 from app import r
 from app.dto.dragonfly_room import DragonflyRoomDTO
 from app.utils.constants import DragonflyRoomField
-from typing import Optional
+from typing import Any, Optional
 
 
 class DragonflyRoomRepository:
@@ -26,6 +25,6 @@ class DragonflyRoomRepository:
             },
         )
 
-        new_room = decode_bytes(r.hgetall(room_key))
+        new_room: dict[str, Any] = r.hgetall(room_key)
 
         return new_room if isinstance(new_room, dict) else None

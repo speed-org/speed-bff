@@ -1,47 +1,64 @@
-from typing import Optional
+from typing import Optional, Any
 from app import r
-from app.utils.dragonfly_helpers import create_player_key, decode_bytes
-from app.utils.constants import DragonflyMatchingField
+from app.utils.dragonfly_helpers import create_player_key
+from app.utils.constants import DragonflyPlayerField
 import time
+from app.dto.dragonfly_player import DragonflyPlayerDTO
+from app.utils.constants import DragonflyPlayerField as fields
 
 
 class DragonflyPlayerRepository:
-
     @staticmethod
     def get_socket_id(player_id: str) -> Optional[str]:
         """
         Retrieves WebSocket ID from Dragonfly Player database.
         """
         player_key = create_player_key(player_id)
-        socket_id = r.hget(player_key, DragonflyMatchingField.WEBSOCKET_ID.value)
-        decoded_id = decode_bytes(socket_id)
+        socket_id: Optional[str] = r.hget(
+            player_key, DragonflyPlayerField.WEBSOCKET_ID.value
+        )
 
-        return decoded_id if isinstance(decoded_id, str) else None
+        return socket_id
 
     @staticmethod
-    def update_player_status(player_id: str, status: str) -> str:
+    def update_player_status(player_id: str, status: str) -> Optional[str]:
         """
         Updates player status to desired status.
         """
         player_key = create_player_key(player_id)
-        r.hset(player_key, DragonflyMatchingField.STATUS.value, status)
+        r.hset(player_key, DragonflyPlayerField.STATUS.value, status)
 
-        new_status = decode_bytes(
-            r.hget(player_key, DragonflyMatchingField.STATUS.value)
+        new_status: Optional[str] = r.hget(
+            player_key, DragonflyPlayerField.STATUS.value
         )
 
-        return str(new_status)
+        return new_status
 
     @staticmethod
-    def update_player_wait_time(player_id: str) -> int:
+    def update_player_wait_time(player_id: str) -> Optional[int]:
         """
         Updates player wait_time to current time.
         """
         player_key = create_player_key(player_id)
-        r.hset(player_key, DragonflyMatchingField.WAIT_TIME.value, int(time.time()))
+        r.hset(player_key, DragonflyPlayerField.WAIT_TIME.value, int(time.time()))
 
-        new_wait_time = decode_bytes(
-            r.hget(player_key, DragonflyMatchingField.WAIT_TIME.value)
+        new_wait_time = r.hget(player_key, DragonflyPlayerField.WAIT_TIME.value)
+
+        return int(new_wait_time) if new_wait_time else None
+
+    @staticmethod
+    def save_player(player: DragonflyPlayerDTO) -> dict[str, Any]:
+        player_key = create_player_key(player.id)
+
+        # Register ws_id, status and wait_time
+        r.hset(
+            player_key,
+            mapping={
+                fields.WS_ID.value: player.sid,
+                fields.STATUS.value: player.status,
+                fields.WAIT_TIME.value: player.wait_time,
+            },
         )
+        new_player: dict = r.hgetall(player_key)
 
-        return int(new_wait_time)
+        return new_player

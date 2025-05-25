@@ -1,7 +1,7 @@
 from app.repositories.dragonfly_waitroom import DragonflyWaitroomRepository
 from app.repositories.dragonfly_player import DragonflyPlayerRepository
 from app.dto.dragonfly_waitroom import DragonflyWaitroomDTO
-from app.utils.constants import DragonflyMatchingStatus
+from app.utils.constants import DragonflyPlayerStatus
 from app.utils.dragonfly_helpers import generate_random_id
 
 
@@ -10,7 +10,7 @@ def add_player_to_matching_system(player_id: str) -> tuple[dict, int]:
     Changes player's status to waiting and adds a wait_time.
     """
 
-    desired_status = DragonflyMatchingStatus.WAITING.value
+    desired_status = DragonflyPlayerStatus.WAITING.value
 
     new_status = DragonflyPlayerRepository.update_player_status(
         player_id, desired_status
