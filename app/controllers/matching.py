@@ -25,7 +25,7 @@ def add_player_to_matching_system(player_id: str) -> tuple[dict, int]:
 
     return {
         "message": "Player added to waitroom",
-        "current user info": current_info,
+        "current player info": current_info,
     }, 200
 
 
