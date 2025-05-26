@@ -1,5 +1,4 @@
 from app import db
-from uuid import UUID
 from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy.types import TIMESTAMP
@@ -12,9 +11,7 @@ class Player(db.Model):  # type: ignore
     __table_name__ = TableName.PLAYER
 
     id: Mapped[str] = mapped_column(
-        String(36),
-        primary_key=True,
-        default = lambda: str(uuid.uuid4())
+        String(36), primary_key=True, default=lambda: str(uuid.uuid4())
     )
     name: Mapped[str] = mapped_column(String(30))
     last_name: Mapped[str] = mapped_column(String(40))
@@ -27,17 +24,10 @@ class Player(db.Model):  # type: ignore
     updated_at: Mapped[datetime] = mapped_column(
         TIMESTAMP(timezone=True), default=lambda: datetime.now(timezone.utc)
     )
-    
-    def __repr__(self):
+
+    def __repr__(self) -> str:
         return f"<Player: id: {self.id}, email: {self.email}, firebase_id: {self.firebase_id}"
 
-    def save(self):
+    def save(self) -> None:
         db.session.add(self)
         db.session.commit()
-    
-    def to_dict(self):
-        """Convert SQLAlchemy model to dictionary, excluding SQLAlchemy internal attributes."""
-        return {key: value for key, value in self.__dict__.items() 
-                if not key.startswith('_')}
-
-

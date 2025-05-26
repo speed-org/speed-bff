@@ -21,7 +21,7 @@ class PlayerSignUp(Resource):
             player_data = request.get_json()  # Request of user data
             logger.info(f"Trying to register new player: {player_data}")
 
-            logger.info(f"Processing player data into dto")
+            logger.info("Processing player data into dto")
             player_dto = RegisterPlayerDTO(**player_data)
 
             response = sign_up_player(player_dto)
@@ -29,6 +29,9 @@ class PlayerSignUp(Resource):
             return response
         except Exception as e:
             return ResponseBuilder.error(
-            message=f"Unexpected error happened when trying to register, player data: {player_data}",
-            data={"error": str(e)}
-        )    
+                message=(
+                    f"Unexpected error happened when trying to register,"
+                    f" player data: {player_data}"
+                ),
+                data={"error": str(e)},
+            )

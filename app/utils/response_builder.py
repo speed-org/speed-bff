@@ -1,27 +1,35 @@
 from typing import Any, Optional
-from flask import jsonify, make_response
+from flask import jsonify, make_response, Response
 from app.utils.constants import RequestKey, HttpStatus
 
 
 class ResponseBuilder:
     @staticmethod
-    def success(message: str = "Operation successful", data: Any = None, status_code: int = HttpStatus.SUCCESS.value):
+    def success(
+        message: str = "Operation successful",
+        data: Any = None,
+        status_code: int = HttpStatus.SUCCESS.value,
+    ) -> Response:
         response_data = {
             RequestKey.STATUS.value: "success",
             RequestKey.MESSAGE.value: message,
-            RequestKey.DATA.value: data
+            RequestKey.DATA.value: data,
         }
 
         return make_response(jsonify(response_data), status_code)
 
     @staticmethod
-    def fail(message: str = "Operation failed", data: Optional[Any] = None, status_code: int = HttpStatus.BAD_REQUEST.value):
+    def fail(
+        message: str = "Operation failed",
+        data: Optional[Any] = None,
+        status_code: int = HttpStatus.BAD_REQUEST.value,
+    ) -> Response:
         response_data = {
             RequestKey.STATUS.value: "fail",
             RequestKey.MESSAGE.value: message,
-            RequestKey.DATA.value: data
+            RequestKey.DATA.value: data,
         }
-        
+
         return make_response(jsonify(response_data), status_code)
 
     @staticmethod
@@ -30,11 +38,11 @@ class ResponseBuilder:
         code: Optional[str] = None,
         data: Optional[Any] = None,
         status_code: int = HttpStatus.INTERNAL_SERVER_ERROR.value,
-    ):
+    ) -> Response:
         response_data = {
             RequestKey.STATUS.value: "error",
             RequestKey.MESSAGE.value: message,
-            RequestKey.DATA.value: data
+            RequestKey.DATA.value: data,
         }
 
         if code:
