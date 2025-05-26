@@ -6,4 +6,4 @@ class RegisterPlayerDTO:
     last_name: str
     email: str
     firebase_id: str
-    refreshToken: str
+    refresh_token: str

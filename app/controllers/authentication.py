@@ -3,11 +3,12 @@ from app.dto.auth import RegisterPlayerDTO
 from app.repositories.postgres_player import PostgresPlayerRepository
 from app.utils.response_builder import ResponseBuilder
 import logging
+from flask import Response
 
 logger = logging.getLogger(__name__)
 
 
-def sign_up_player(player_dto: RegisterPlayerDTO) -> tuple[dict, int]:
+def sign_up_player(player_dto: RegisterPlayerDTO) -> Response:
     """
     Adds player to PostgresSQL database.
     """    
@@ -23,6 +24,6 @@ def sign_up_player(player_dto: RegisterPlayerDTO) -> tuple[dict, int]:
     
     return ResponseBuilder.success(
         message="Player added to database",
-        data={"current player info": new_player}
+        data={"new player_id": new_player.id}
     )
 

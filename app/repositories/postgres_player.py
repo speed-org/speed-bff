@@ -12,7 +12,8 @@ class PostgresPlayerRepository:
             name = player_dto.name,
             last_name = player_dto.last_name,
             email = player_dto.email,
-            refreshToken = player_dto.refreshToken
+            firebase_id = player_dto.firebase_id,
+            refresh_token = player_dto.refresh_token
         )
         
         added_player.save()

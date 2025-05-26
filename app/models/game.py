@@ -4,7 +4,7 @@ from app import db
 from app.utils.constants import TableName
 from uuid import UUID
 from datetime import datetime, timezone
-from sqlalchemy.types import DATETIME
+from sqlalchemy.types import TIMESTAMP
 
 
 class GameRoom(db.Model):  # type: ignore
@@ -27,8 +27,8 @@ class GameRoom(db.Model):  # type: ignore
     player2Id: Mapped[UUID] = mapped_column(ForeignKey(f"{TableName.PLAYER}.id"))
 
     created_at: Mapped[datetime] = mapped_column(
-        DATETIME(timezone=True), default=lambda: datetime.now(timezone.utc)
+        TIMESTAMP(timezone=True), default=lambda: datetime.now(timezone.utc)
     )
     updated_at: Mapped[datetime] = mapped_column(
-        DATETIME(timezone=True), default=lambda: datetime.now(timezone.utc)
+        TIMESTAMP(timezone=True), default=lambda: datetime.now(timezone.utc)
     )
