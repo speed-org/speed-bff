@@ -123,17 +123,17 @@ db-reset:
 	$(MAKE) db-migrate
 
 # Lint, Format and Type checking commands
-lint:
+lint: venv
 	$(call validate_args,lint)
-	flake8 $(filter-out $@,$(MAKECMDGOALS))
+	. speed-venv/bin/activate && flake8 $(filter-out $@,$(MAKECMDGOALS)) --max-line-length=88 --extend-ignore=E203,W503
 
-fmt:
+fmt: venv
 	$(call validate_args,fmt)
-	black $(filter-out $@,$(MAKECMDGOALS))
+	. speed-venv/bin/activate && black --check $(filter-out $@,$(MAKECMDGOALS))
 
-check:
+check: venv
 	$(call validate_args,check)
-	mypy $(filter-out $@,$(MAKECMDGOALS))
+	. speed-venv/bin/activate && mypy $(filter-out $@,$(MAKECMDGOALS)) --ignore-missing-imports
 
 
 # Help command
