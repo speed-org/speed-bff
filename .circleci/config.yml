@@ -1,0 +1,78 @@
+version: 2.1
+
+# Define reusable executors
+executors:
+  python-executor:
+    docker:
+      - image: cimg/python:3.10
+
+# Define reusable commands
+commands:
+  setup-environment:
+    description: "Set up Python environment using Makefile pattern"
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "requirements.txt" }}
+            - v1-dependencies-
+      - run:
+          name: Set up virtual environment
+          command: |
+            make venv
+      - save_cache:
+          paths:
+            - ./speed-venv
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
+
+
+
+# Define jobs
+jobs:
+  lint:
+    executor: python-executor
+    steps:
+      - setup-environment
+      - run:
+          name: Run flake8 linting
+          command: |
+            echo "Running flake8..."
+            make lint app
+      - run:
+          name: Run black formatting check
+          command: |
+            echo "Running black check..."
+            make fmt app
+
+  type-check:
+    executor: python-executor
+    steps:
+      - setup-environment
+      - run:
+          name: Run mypy type checking
+          command: |
+            echo "Running mypy type checking..."
+            make check app
+
+  test:
+    executor: python-executor
+    steps:
+      - setup-environment
+      - run:
+          name: Run tests
+          command: |
+            # Add your test command here when you have tests
+            # make test
+            echo "No tests defined yet - placeholder for future tests"
+
+# Define workflows
+workflows:
+  version: 2
+  ci:
+    jobs:
+      - lint
+      - type-check
+      - test:
+          requires:
+            - lint
+            - type-check
