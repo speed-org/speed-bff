@@ -60,7 +60,7 @@ def match_oldest_players() -> tuple[dict, int]:
     )
 
     return {
-        "message": f"Sucessfully matched players.",
+        "message": "Sucessfully matched players.",
         "matched_ids": player_ids,
         "waitroom_data": asdict(waitroom_dto),
         "new status": players_status,

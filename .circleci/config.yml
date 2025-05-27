@@ -42,7 +42,7 @@ jobs:
           name: Run black formatting check
           command: |
             echo "Running black check..."
-            make fmt app
+            make fmt-check app
 
   type-check:
     executor: python-executor
