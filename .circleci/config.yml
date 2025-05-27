@@ -12,18 +12,12 @@ commands:
     description: "Set up Python environment using Makefile pattern"
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "requirements.txt" }}
-            - v1-dependencies-
       - run:
           name: Set up virtual environment
           command: |
             make venv
-      - save_cache:
-          paths:
-            - ./speed-venv
-          key: v1-dependencies-{{ checksum "requirements.txt" }}
+            # Ensure conflicting SQLAlchemy stubs are removed
+            . speed-venv/bin/activate && pip uninstall -y types-SQLAlchemy types-Flask-SQLAlchemy sqlalchemy-stubs sqlalchemy2-stubs || true
 
 
 
