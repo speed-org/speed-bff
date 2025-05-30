@@ -129,6 +129,10 @@ lint: venv
 
 fmt: venv
 	$(call validate_args,fmt)
+	. speed-venv/bin/activate && black $(filter-out $@,$(MAKECMDGOALS))
+
+fmt-check: venv
+	$(call validate_args,fmt-check)
 	. speed-venv/bin/activate && black --check $(filter-out $@,$(MAKECMDGOALS))
 
 check: venv
@@ -156,6 +160,7 @@ help:
 	@echo "  make db-migrate  - Run database migrations"
 	@echo "  make db-rollback - Rollback last migration"
 	@echo "  make db-reset    - Reset database (drop, create, migrate)" 
-	@echo "  make lint path   - Validates linting for a given path"
-	@echo "  make fmt path    - formats the code to match linting rules"
-	@echo "  make check path  - Checks typing for a given path"
+	@echo "  make lint path      - Validates linting for a given path"
+	@echo "  make fmt path       - Formats the code using black"
+	@echo "  make fmt-check path - Checks if code is formatted correctly"
+	@echo "  make check path     - Checks typing for a given path"
