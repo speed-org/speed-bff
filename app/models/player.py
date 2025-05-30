@@ -26,7 +26,11 @@ class Player(db.Model):  # type: ignore
     )
 
     def __repr__(self) -> str:
-        return f"<Player: id: {self.id}, email: {self.email}, firebase_id: {self.firebase_id}"
+        return (
+            f"<Player: id: {self.id},"
+            f" email: {self.email},"
+            f" firebase_id: {self.firebase_id}"
+        )
 
     def save(self) -> None:
         db.session.add(self)
