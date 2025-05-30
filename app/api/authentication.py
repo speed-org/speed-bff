@@ -1,4 +1,3 @@
-from typing import Optional
 from flask_restx import Namespace, Resource
 from flask import request
 from app.controllers.authentication import sign_up_player, log_in_player
@@ -35,7 +34,7 @@ class PlayerSignUp(Resource):
                     f"Unexpected error happened when trying to register,"
                     f" player data: {player_data}"
                 ),
-                data=ResponseDTO(error = str(e)),
+                data=ResponseDTO(error=str(e)),
             )
 
 
@@ -46,7 +45,7 @@ class PlayerLogIn(Resource):
         Retreives player's information from PostgreSQL database.
         """
         try:
-            firebase_id = request.args.get('firebaseId')
+            firebase_id = request.args.get("firebaseId")
             logger.info(f"Trying to retrieve data of player: {firebase_id}")
 
             if not firebase_id:
@@ -66,5 +65,5 @@ class PlayerLogIn(Resource):
                     f"Unexpected error happened when trying to retrieve data by firebase_id,"
                     f" player data: {firebase_id}"
                 ),
-                data=ResponseDTO(error = str(e)),
+                data=ResponseDTO(error=str(e)),
             )

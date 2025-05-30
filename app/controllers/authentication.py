@@ -56,7 +56,7 @@ def log_in_player(player_dto: LogInPlayerPayloadDTO) -> Response:
             f" firebase id: {player_dto.firebaseId}"
         )
         logger.error(message)
-        return ResponseBuilder.fail(message=message)
+        return ResponseBuilder.fail(message=message, status_code=404)
 
     logger.info(f"Player id: {player_info.id}, successfully retrieved.")
 
@@ -65,7 +65,7 @@ def log_in_player(player_dto: LogInPlayerPayloadDTO) -> Response:
         id=player_info.id,
         name=player_info.name,
         lastName=player_info.last_name,
-        email=player_info.email
+        email=player_info.email,
     )
 
     return ResponseBuilder.success(

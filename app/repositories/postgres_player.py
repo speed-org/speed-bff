@@ -22,10 +22,14 @@ class PostgresPlayerRepository:
         return added_player
 
     @staticmethod
-    def get_player_by_firebase_id(player_dto: LogInPlayerPayloadDTO) -> Optional[Player]:
+    def get_player_by_firebase_id(
+        player_dto: LogInPlayerPayloadDTO,
+    ) -> Optional[Player]:
         """
         Gets player from PostgreSQL database.
         """
-        player:Optional[Player] = Player.query.filter_by(firebase_id=player_dto.firebaseId).first()
+        player: Optional[Player] = Player.query.filter_by(
+            firebase_id=player_dto.firebaseId
+        ).first()
 
         return player
