@@ -1,3 +1,4 @@
+from typing import Optional
 from app.dto.auth import RegisterPlayerPayloadDTO, LogInPlayerPayloadDTO
 from app.models.player import Player
 
@@ -21,10 +22,10 @@ class PostgresPlayerRepository:
         return added_player
 
     @staticmethod
-    def get_player_by_firebase_id(player_dto: LogInPlayerPayloadDTO) -> Player:
+    def get_player_by_firebase_id(player_dto: LogInPlayerPayloadDTO) -> Optional[Player]:
         """
         Gets player from PostgreSQL database.
         """
-        player = Player.query.filter_by(firebase_id=player_dto.firebaseId).first()
+        player:Optional[Player] = Player.query.filter_by(firebase_id=player_dto.firebaseId).first()
 
         return player

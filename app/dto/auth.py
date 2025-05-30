@@ -24,3 +24,6 @@ class LogInPlayerPayloadDTO:
 @dataclass
 class LogInPlayerResponseDTO(ResponseDTO):
     id: str
+    name: str
+    lastName: str
+    email: str

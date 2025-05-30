@@ -1,3 +1,4 @@
+from typing import Optional
 from flask_restx import Namespace, Resource
 from flask import request
 from app.controllers.authentication import sign_up_player, log_in_player
@@ -45,11 +46,16 @@ class PlayerLogIn(Resource):
         Retreives player's information from PostgreSQL database.
         """
         try:
-            player_data = request.get_data()  # Request user firebaseId
-            logger.info(f"Trying to retrieve data of player: {player_data}")
+            firebase_id = request.args.get('firebaseId')
+            logger.info(f"Trying to retrieve data of player: {firebase_id}")
+
+            if not firebase_id:
+                message = "Missing firebase_id"
+                logger.error(message)
+                ResponseBuilder.fail(message)
 
             logger.info("Processing player data into dto")
-            player_dto = LogInPlayerPayloadDTO(**player_data)
+            player_dto = LogInPlayerPayloadDTO(str(firebase_id))
 
             response = log_in_player(player_dto)
 
@@ -58,7 +64,7 @@ class PlayerLogIn(Resource):
             return ResponseBuilder.error(
                 message=(
                     f"Unexpected error happened when trying to retrieve data by firebase_id,"
-                    f" player data: {player_data}"
+                    f" player data: {firebase_id}"
                 ),
                 data=ResponseDTO(error = str(e)),
             )

@@ -61,7 +61,12 @@ def log_in_player(player_dto: LogInPlayerPayloadDTO) -> Response:
     logger.info(f"Player id: {player_info.id}, successfully retrieved.")
 
     # Create Response DTO
-    response_dto = LogInPlayerResponseDTO(player_info.id)
+    response_dto = LogInPlayerResponseDTO(
+        id=player_info.id,
+        name=player_info.name,
+        lastName=player_info.last_name,
+        email=player_info.email
+    )
 
     return ResponseBuilder.success(
         message="Player information retrieved", data=response_dto
