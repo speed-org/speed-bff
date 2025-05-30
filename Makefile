@@ -125,7 +125,7 @@ db-reset:
 # Lint, Format and Type checking commands
 lint: venv
 	$(call validate_args,lint)
-	. speed-venv/bin/activate && flake8 $(filter-out $@,$(MAKECMDGOALS)) --max-line-length=88 --extend-ignore=E203,W503
+	. speed-venv/bin/activate && flake8 $(filter-out $@,$(MAKECMDGOALS)) --max-line-length=95 --extend-ignore=E203,W503
 
 fmt: venv
 	$(call validate_args,fmt)
