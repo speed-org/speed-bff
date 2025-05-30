@@ -12,10 +12,10 @@ logger = logging.getLogger(__name__)
 class Waiting(Resource):
     def post(self):  # type: ignore
         """
-        Adding user to waiting room.
+        Adding player to waiting room.
         """
         logger.debug("Got to the waiting endpoint")
-        data = request.get_json()  # Call to input user ID
+        data = request.get_json()  # Request of player ID
 
         player_id = data["player_id"]
         logger.debug(f"Player id: {player_id}")
@@ -28,7 +28,7 @@ class Waiting(Resource):
 class Matching(Resource):
     def get(self):  # type: ignore
         """
-        Matching two oldest users.
+        Matching two oldest players.
         """
         logger.debug("Got to the matching endpoint")
         response = match_oldest_players()

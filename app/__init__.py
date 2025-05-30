@@ -30,6 +30,7 @@ def create_app(config: Config) -> Flask:
     DragonflyService.init_player_index(r)
 
     db.init_app(app)
+    migrate.init_app(app, db)
     socketio.init_app(app, cors_allowed_origins=config.ALLOWED_ORIGINS)
     register_handlers(socketio)
 
