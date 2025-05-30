@@ -62,6 +62,10 @@ After running `make init`, you need to set up the database schema:
 ```bash
 FLASK_APP=app.main flask db init
 ```
+This comment sets the env variable for the console session for windows:
+```bash
+$env:FLASK_APP = "app.main"
+```
 
 2. **Create initial migration**:
 ```bash
@@ -116,7 +120,7 @@ make docker-setup
 
 ```bash
 # Test with curl
-curl -X POST http://127.0.0.1:5000/auth/sign-up -H "Content-Type: application/json" -d '{"name": "Test", "last_name": "User", "email": "test@test.com", "firebase_id": "123", "refresh_token": "token"}'
+curl -X POST http://127.0.0.1:5000/auth/sign-up -H "Content-Type: application/json" -d '{"name": "Test", "lastName": "User", "email": "test@test.com", "firebaseId": "123", "refreshToken": "token"}'
 ```
 
 ### Available Commands

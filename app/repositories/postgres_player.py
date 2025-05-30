@@ -9,11 +9,11 @@ class PostgresPlayerRepository:
         Adds player to PostgreSQL database.
         """
         added_player = Player(
-            name=player_dto.name,
-            last_name=player_dto.last_name,
-            email=player_dto.email,
-            firebase_id=player_dto.firebase_id,
-            refresh_token=player_dto.refresh_token,
+            name=player_dto.name.lower(),
+            last_name=player_dto.lastName.lower(),
+            email=player_dto.email.lower(),
+            firebase_id=player_dto.firebaseId,
+            refresh_token=player_dto.refreshToken,
         )
 
         added_player.save()
