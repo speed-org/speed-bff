@@ -1,10 +1,10 @@
-from app.dto.auth import RegisterPlayerDTO
+from app.dto.auth import RegisterPlayerPayloadDTO, LogInPlayerPayloadDTO
 from app.models.player import Player
 
 
 class PostgresPlayerRepository:
     @staticmethod
-    def add_player_to_database(player_dto: RegisterPlayerDTO) -> Player:
+    def add_player_to_database(player_dto: RegisterPlayerPayloadDTO) -> Player:
         """
         Adds player to PostgreSQL database.
         """
@@ -19,3 +19,12 @@ class PostgresPlayerRepository:
         added_player.save()
 
         return added_player
+
+    @staticmethod
+    def get_player_by_firebase_id(player_dto: LogInPlayerPayloadDTO) -> Player:
+        """
+        Gets player from PostgreSQL database.
+        """
+        player = Player.query.filter_by(firebase_id=player_dto.firebaseId).first()
+
+        return player
