@@ -2,6 +2,7 @@ from flask_restx import Namespace, Resource
 from flask import request
 from app.controllers.matching import add_player_to_matching_system, match_oldest_players
 import logging
+from app.analytics.run_test_logger import test
 
 
 matching_ns = Namespace("matching", description="Matching related operations")
@@ -16,6 +17,9 @@ class Waiting(Resource):
         """
         logger.debug("Got to the waiting endpoint")
         data = request.get_json()  # Request of player ID
+
+        # Testing analytics logger rq
+        test()
 
         player_id = data["player_id"]
         logger.debug(f"Player id: {player_id}")

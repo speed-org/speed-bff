@@ -10,3 +10,4 @@ class Config:
     SQLALCHEMY_DATABASE_URI = getenv("SQLALCHEMY_DATABASE_URI", "")
     SECRET_KEY = getenv("SECRET_KEY", "")
     REDIS_URL = getenv("REDIS_URL", "")
+    MONGO_URI = getenv("MONGO_URI", "")
