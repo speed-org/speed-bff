@@ -7,6 +7,7 @@ from app.config import Config
 from app.services.dragonfly import DragonflyService
 import redis
 from flask_socketio import SocketIO
+from pymongo import MongoClient
 
 
 db = SQLAlchemy()
@@ -33,5 +34,11 @@ def create_app(config: Config) -> Flask:
     migrate.init_app(app, db)
     socketio.init_app(app, cors_allowed_origins=config.ALLOWED_ORIGINS)
     register_handlers(socketio)
+
+    # Register MongoDB
+    mongo_client: MongoClient = MongoClient(Config.MONGO_URI)
+    app.mongo_client = mongo_client
+    app.mongo_db = mongo_client["speed_game"]
+    app.analytics_collection = app.mongo_db["analytics_logs"]
 
     return app
